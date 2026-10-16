@@ -1,0 +1,72 @@
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1>👨‍🏫 Enseignants</h1>
+      <p class="subtitle">{{ teachers().length }} enseignant(s)</p>
+    </div>
+    <button class="btn-primary" (click)="openCreate()">+ Nouvel enseignant</button>
+  </div>
+
+  <div class="toolbar">
+    <input
+      type="text"
+      placeholder="Rechercher un enseignant..."
+      [(ngModel)]="search"
+      (input)="onSearch()"
+      class="search-input"
+    />
+  </div>
+
+  @if (loading()) {
+    <div class="loading">Chargement...</div>
+  } @else if (teachers().length === 0) {
+    <div class="empty">Aucun enseignant. Cliquez sur "Nouvel enseignant" pour en ajouter.</div>
+  } @else {
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Prénom</th>
+          <th>Nom</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (t of teachers(); track t.id) {
+          <tr>
+            <td>{{ t.id }}</td>
+            <td>{{ t.first_name }}</td>
+            <td>{{ t.last_name }}</td>
+            <td>{{ t.email || '-' }}</td>
+            <td class="actions">
+              <button class="btn-edit" (click)="openEdit(t)">Modifier</button>
+              <button class="btn-delete" (click)="confirmDelete(t)">Supprimer</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>
+
+@if (showForm()) {
+  <app-teacher-form
+    [teacher]="editingTeacher()"
+    (saved)="onFormSaved()"
+    (cancelled)="onFormCancel()"
+  />
+}
+
+@if (deleteConfirm()) {
+  <div class="modal-backdrop" (click)="cancelDelete()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h3>Confirmer la suppression</h3>
+      <p>Supprimer <strong>{{ deleteConfirm()?.first_name }} {{ deleteConfirm()?.last_name }}</strong> ?</p>
+      <div class="modal-actions">
+        <button class="btn-cancel" (click)="cancelDelete()">Annuler</button>
+        <button class="btn-delete" (click)="deleteTeacher()">Supprimer</button>
+      </div>
+    </div>
+  </div>
+}

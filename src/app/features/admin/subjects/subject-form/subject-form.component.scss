@@ -1,0 +1,11 @@
+﻿.modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+.modal { background: white; border-radius: 12px; padding: 2rem; max-width: 480px; width: 90%; h2 { margin-top: 0; color: #1e293b; } }
+.field {
+  margin-bottom: 1rem;
+  label { display: block; margin-bottom: 0.4rem; font-size: 0.9rem; color: #334155; font-weight: 500; }
+  input { width: 100%; padding: 0.65rem 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box; &:focus { outline: none; border-color: #667eea; } }
+}
+.alert-error { background: #fee2e2; color: #b91c1c; padding: 0.75rem; border-radius: 8px; margin-bottom: 1rem; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem; }
+.btn-primary { padding: 0.7rem 1.25rem; background: #667eea; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; &:hover:not(:disabled) { background: #5568d3; } &:disabled { opacity: 0.6; cursor: not-allowed; } }
+.btn-cancel { padding: 0.7rem 1.25rem; background: #f1f5f9; color: #475569; border: none; border-radius: 8px; cursor: pointer; &:hover { background: #e2e8f0; } }

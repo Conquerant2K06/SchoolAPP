@@ -1,0 +1,81 @@
+﻿<div class="page">
+  <div class="page-header">
+    <div>
+      <h1>📄 Bulletins</h1>
+      <p class="subtitle">{{ reports().length }} bulletin(s)</p>
+    </div>
+    <button class="btn-primary" (click)="openModal()">⚡ Générer un bulletin</button>
+  </div>
+
+  @if (successMessage()) {
+    <div class="alert-success">{{ successMessage() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="loading">Chargement...</div>
+  } @else if (reports().length === 0) {
+    <div class="empty">Aucun bulletin. Clique sur "Générer un bulletin".</div>
+  } @else {
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Élève</th>
+          <th>Classe</th>
+          <th>Trim.</th>
+          <th>Moyenne</th>
+          <th>Rang</th>
+          <th>Appréciation</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (rc of reports(); track rc.id) {
+          <tr>
+            <td><strong>{{ rc.student_first_name }} {{ rc.student_last_name }}</strong></td>
+            <td>{{ rc.class_name || '-' }}</td>
+            <td>T{{ rc.trimester }}</td>
+            <td class="value">{{ rc.general_average }}/20</td>
+            <td>{{ rc.rank }}</td>
+            <td>{{ rc.appreciation }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>
+
+@if (showModal()) {
+  <div class="modal-backdrop" (click)="closeModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h2>Générer un bulletin</h2>
+      <form [formGroup]="form" (ngSubmit)="generate()">
+        <div class="field">
+          <label>Élève *</label>
+          <select formControlName="student_id">
+            <option [ngValue]="null">-- Choisir --</option>
+            @for (s of students(); track s.id) {
+              <option [ngValue]="s.id">{{ s.first_name }} {{ s.last_name }}</option>
+            }
+          </select>
+        </div>
+        <div class="field">
+          <label>Trimestre *</label>
+          <select formControlName="trimester">
+            <option [ngValue]="1">Trimestre 1</option>
+            <option [ngValue]="2">Trimestre 2</option>
+            <option [ngValue]="3">Trimestre 3</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Année scolaire *</label>
+          <input type="text" formControlName="school_year" />
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" (click)="closeModal()">Annuler</button>
+          <button type="submit" class="btn-primary" [disabled]="generating()">
+            {{ generating() ? 'Génération...' : 'Générer' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+}

@@ -1,0 +1,85 @@
+﻿<div class="page">
+  <h1>✏️ Saisie des notes</h1>
+
+  <div class="filters">
+    <div class="field">
+      <label>Classe</label>
+      <select [(ngModel)]="selectedClassId" (change)="onClassChange()">
+        <option [ngValue]="null">-- Choisir --</option>
+        @for (c of classes(); track c.id) {
+          <option [ngValue]="c.id">{{ c.name }}</option>
+        }
+      </select>
+    </div>
+    <div class="field">
+      <label>Matière</label>
+      <select [(ngModel)]="selectedSubjectId">
+        <option [ngValue]="null">-- Choisir --</option>
+        @for (s of subjects(); track s.id) {
+          <option [ngValue]="s.id">{{ s.name }}</option>
+        }
+      </select>
+    </div>
+    <div class="field">
+      <label>Trimestre</label>
+      <select [(ngModel)]="selectedTrimester">
+        <option [ngValue]="1">Trimestre 1</option>
+        <option [ngValue]="2">Trimestre 2</option>
+        <option [ngValue]="3">Trimestre 3</option>
+      </select>
+    </div>
+  </div>
+
+  @if (successMessage()) {
+    <div class="alert-success">{{ successMessage() }}</div>
+  }
+
+  @if (students().length > 0 && selectedSubjectId) {
+    <table class="grade-table">
+      <thead>
+        <tr>
+          <th>Élève</th>
+          <th>Notes (valeur / 20 · type · coef)</th>
+          <th>Moyenne</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (s of students(); track s.id) {
+          <tr>
+            <td><strong>{{ s.first_name }} {{ s.last_name }}</strong></td>
+            <td class="grade-rows">
+              @for (row of grades()[s.id!]; track $index) {
+                <div class="grade-row">
+                  <input type="number" min="0" max="20" step="0.5" [(ngModel)]="row.value" placeholder="Note" />
+                  <select [(ngModel)]="row.type">
+                    <option value="controle">Contrôle</option>
+                    <option value="devoir">Devoir</option>
+                    <option value="examen">Examen</option>
+                  </select>
+                  <input type="number" min="1" [(ngModel)]="row.coefficient" placeholder="Coef" />
+                  <button class="btn-icon btn-delete" (click)="removeRow(s.id!, $index)">✕</button>
+                </div>
+              }
+              <button class="btn-add" (click)="addRow(s.id!)">+ Ajouter une note</button>
+            </td>
+            <td class="avg">{{ getStudentAvg(s.id!) }}/20</td>
+            <td></td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <div class="actions">
+      <button class="btn-primary" (click)="saveAll()" [disabled]="saving()">
+        {{ saving() ? 'Enregistrement...' : '💾 Enregistrer tout' }}
+      </button>
+    </div>
+  } @else if (students().length === 0 && selectedClassId) {
+    <div class="empty">Aucun élève dans cette classe.</div>
+  } @else if (selectedClassId && !selectedSubjectId) {
+    <div class="empty">Sélectionne une matière pour saisir les notes.</div>
+  } @else {
+    <div class="empty">Sélectionne une classe pour commencer.</div>
+  }
+</div>

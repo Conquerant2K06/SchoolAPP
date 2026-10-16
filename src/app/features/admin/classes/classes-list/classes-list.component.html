@@ -1,0 +1,53 @@
+﻿<div class="page">
+  <div class="page-header">
+    <div>
+      <h1>🏫 Classes</h1>
+      <p class="subtitle">{{ classes().length }} classe(s)</p>
+    </div>
+    <button class="btn-primary" (click)="openCreate()">+ Nouvelle classe</button>
+  </div>
+
+  @if (loading()) {
+    <div class="loading">Chargement...</div>
+  } @else if (classes().length === 0) {
+    <div class="empty">Aucune classe.</div>
+  } @else {
+    <table class="data-table">
+      <thead>
+        <tr><th>ID</th><th>Nom</th><th>Niveau</th><th>Année</th><th>Élèves</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        @for (c of classes(); track c.id) {
+          <tr>
+            <td>{{ c.id }}</td>
+            <td><strong>{{ c.name }}</strong></td>
+            <td>{{ c.level || '-' }}</td>
+            <td>{{ c.school_year }}</td>
+            <td>{{ c.student_count || 0 }}</td>
+            <td class="actions">
+              <button class="btn-edit" (click)="openEdit(c)">Modifier</button>
+              <button class="btn-delete" (click)="confirmDelete(c)">Supprimer</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>
+
+@if (showForm()) {
+  <app-class-form [classData]="editingClass()" (saved)="onFormSaved()" (cancelled)="onFormCancel()" />
+}
+
+@if (deleteConfirm()) {
+  <div class="modal-backdrop" (click)="cancelDelete()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h3>Confirmer</h3>
+      <p>Supprimer {{ deleteConfirm()?.name }} ?</p>
+      <div class="modal-actions">
+        <button class="btn-cancel" (click)="cancelDelete()">Annuler</button>
+        <button class="btn-delete" (click)="deleteClass()">Supprimer</button>
+      </div>
+    </div>
+  </div>
+}

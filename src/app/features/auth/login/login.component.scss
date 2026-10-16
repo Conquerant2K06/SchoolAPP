@@ -1,0 +1,65 @@
+﻿.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 1rem;
+}
+
+.auth-card {
+  background: white;
+  border-radius: 12px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+
+  h1 { margin: 0 0 0.5rem; color: #333; font-size: 1.8rem; }
+  .subtitle { color: #666; margin-bottom: 2rem; }
+}
+
+.field {
+  margin-bottom: 1.25rem;
+  label { display: block; margin-bottom: 0.5rem; color: #333; font-weight: 500; font-size: 0.9rem; }
+  input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    &:focus { outline: none; border-color: #667eea; }
+  }
+}
+
+.alert-error {
+  background: #fee;
+  color: #c33;
+  padding: 0.75rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+button {
+  width: 100%;
+  padding: 0.85rem;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  &:hover:not(:disabled) { background: #5568d3; }
+  &:disabled { opacity: 0.6; cursor: not-allowed; }
+}
+
+.footer-link {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #666;
+  font-size: 0.9rem;
+  a { color: #667eea; text-decoration: none; font-weight: 600; &:hover { text-decoration: underline; } }
+}

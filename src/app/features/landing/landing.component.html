@@ -1,0 +1,201 @@
+﻿<div class="landing">
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a routerLink="/" class="brand">
+        <span class="logo">🎓</span>
+        <span class="name">SchoolCI</span>
+      </a>
+
+      <button class="mobile-toggle" (click)="toggleMenu()">☰</button>
+
+      <div class="nav-links" [class.open]="menuOpen()">
+        <a routerLink="/" class="nav-link">Accueil</a>
+        <a href="#features" class="nav-link" (click)="closeMenu()">Fonctionnalités</a>
+        <a href="#roles" class="nav-link" (click)="closeMenu()">Rôles</a>
+        <a href="#about" class="nav-link" (click)="closeMenu()">À propos</a>
+        <a href="#contact" class="nav-link" (click)="closeMenu()">Contact</a>
+
+        <div class="nav-actions-mobile">
+          @if (auth.isAuthenticated()) {
+            <a routerLink="/dashboard" class="btn-primary">Mon espace →</a>
+          } @else {
+            <a routerLink="/login" class="btn-ghost">Se connecter</a>
+            <a routerLink="/register" class="btn-primary">S'inscrire</a>
+          }
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        @if (auth.isAuthenticated()) {
+          <a routerLink="/dashboard" class="btn-primary">Mon espace →</a>
+        } @else {
+          <a routerLink="/login" class="btn-ghost">Se connecter</a>
+          <a routerLink="/register" class="btn-primary">S'inscrire</a>
+        }
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <span class="badge">🇨🇮 Plateforme éducative</span>
+      <h1>Gérez les <span class="highlight">notes</span> et <span class="highlight">bulletins</span> en toute simplicité</h1>
+      <p class="lead">
+        SchoolCI centralise la saisie des notes, le calcul des moyennes et la génération
+        des bulletins scolaires. Une solution complète pour les administrateurs,
+        enseignants et élèves.
+      </p>
+      <div class="hero-actions">
+        @if (auth.isAuthenticated()) {
+          <a routerLink="/dashboard" class="btn-primary btn-lg">Accéder à mon espace →</a>
+        } @else {
+          <a routerLink="/register" class="btn-primary btn-lg">Commencer gratuitement</a>
+          <a routerLink="/login" class="btn-outline btn-lg">J'ai déjà un compte</a>
+        }
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="card">
+        <div class="card-header">📊 Bulletin - Aya Traoré</div>
+        <div class="card-row"><span>Mathématiques</span><strong>15.5/20</strong></div>
+        <div class="card-row"><span>Français</span><strong>14.0/20</strong></div>
+        <div class="card-row"><span>Anglais</span><strong>16.5/20</strong></div>
+        <div class="card-total"><span>Moyenne</span><strong>15.3/20</strong></div>
+        <div class="card-footer">Mention : Bien · Rang : 1er</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <h2>Tout ce dont vous avez besoin</h2>
+    <p class="section-subtitle">Une plateforme pensée pour les besoins réels des établissements scolaires.</p>
+    <div class="features-grid">
+      <div class="feature">
+        <div class="feature-icon">✏️</div>
+        <h4>Saisie des notes</h4>
+        <p>Saisie groupée par classe, matière et trimestre.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🧮</div>
+        <h4>Calcul des moyennes</h4>
+        <p>Moyennes pondérées par coefficient, automatiques.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📄</div>
+        <h4>Bulletins</h4>
+        <p>Génération automatique avec rang et appréciation.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📊</div>
+        <h4>Tableau de bord</h4>
+        <p>Statistiques en temps réel par rôle.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🔒</div>
+        <h4>Sécurisé</h4>
+        <p>Authentification JWT et gestion des rôles.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">⚡</div>
+        <h4>Rapide</h4>
+        <p>Angular 17 + Node.js + PostgreSQL.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROLES -->
+  <section class="roles" id="roles">
+    <h2>Un espace pour chaque utilisateur</h2>
+    <p class="section-subtitle">Chaque acteur dispose de son propre espace et de ses propres droits.</p>
+    <div class="roles-grid">
+      <div class="role-card">
+        <div class="role-icon">🛡️</div>
+        <h3>Administrateur</h3>
+        <p>Gère les élèves, enseignants, classes et matières. Publie les bulletins et consulte les statistiques.</p>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">👨‍🏫</div>
+        <h3>Enseignant</h3>
+        <p>Saisit les notes de ses classes et matières. Consulte les moyennes de ses élèves.</p>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">🎓</div>
+        <h3>Élève</h3>
+        <p>Consulte ses notes par matière et télécharge ses bulletins trimestriels.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-content">
+      <h2>À propos de SchoolCI</h2>
+      <p>
+        SchoolCI est une application web complète de gestion scolaire. Elle permet aux
+        établissements de centraliser toutes les données liées aux notes et aux bulletins :
+        gestion des élèves, des enseignants, des classes, des matières, saisie des notes
+        par les enseignants, calcul automatique des moyennes pondérées, génération des
+        bulletins trimestriels avec rang et appréciation.
+      </p>
+      <p>
+        Construite avec <strong>Angular 17</strong> pour le frontend,
+        <strong>Node.js / Express</strong> pour le backend, et
+        <strong>PostgreSQL</strong> pour la base de données, elle est déployée sur
+        <strong>Vercel</strong> et <strong>Render</strong>.
+      </p>
+      <div class="about-stats">
+        <div class="stat"><strong>3</strong><span>Rôles utilisateurs</span></div>
+        <div class="stat"><strong>7</strong><span>Modules métier</span></div>
+        <div class="stat"><strong>100%</strong><span>Gratuit & open-source</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <h2>Prêt à commencer ?</h2>
+    <p>Créez votre compte en quelques secondes et découvrez SchoolCI.</p>
+    @if (!auth.isAuthenticated()) {
+      <a routerLink="/register" class="btn-primary btn-lg">Créer un compte</a>
+    } @else {
+      <a routerLink="/dashboard" class="btn-primary btn-lg">Aller à mon tableau de bord</a>
+    }
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <h2>Contact</h2>
+    <p class="section-subtitle">Une question ? Écrivez-nous.</p>
+    <div class="contact-grid">
+      <div class="contact-item">
+        <div class="contact-icon">📧</div>
+        <h4>Email</h4>
+       <p>contact&#64;schoolci.ci</p>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📱</div>
+        <h4>Téléphone</h4>
+        +225 0777612521
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <h4>Adresse</h4>
+        <p>Abidjan, Côte d'Ivoire</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <span class="logo">🎓</span>
+        <span class="name">SchoolCI</span>
+      </div>
+      <p>© 2026 SchoolCI · Projet Angular & OpenSpec · Tous droits réservés</p>
+    </div>
+  </footer>
+</div>

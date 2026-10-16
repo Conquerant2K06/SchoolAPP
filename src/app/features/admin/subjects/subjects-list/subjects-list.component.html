@@ -1,0 +1,46 @@
+﻿<div class="page">
+  <div class="page-header">
+    <div>
+      <h1>📚 Matières</h1>
+      <p class="subtitle">{{ subjects().length }} matière(s)</p>
+    </div>
+    <button class="btn-primary" (click)="openCreate()">+ Nouvelle matière</button>
+  </div>
+  @if (loading()) {
+    <div class="loading">Chargement...</div>
+  } @else if (subjects().length === 0) {
+    <div class="empty">Aucune matière.</div>
+  } @else {
+    <table class="data-table">
+      <thead><tr><th>ID</th><th>Nom</th><th>Coefficient</th><th>Actions</th></tr></thead>
+      <tbody>
+        @for (s of subjects(); track s.id) {
+          <tr>
+            <td>{{ s.id }}</td>
+            <td><strong>{{ s.name }}</strong></td>
+            <td>{{ s.coefficient }}</td>
+            <td class="actions">
+              <button class="btn-edit" (click)="openEdit(s)">Modifier</button>
+              <button class="btn-delete" (click)="confirmDelete(s)">Supprimer</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>
+@if (showForm()) {
+  <app-subject-form [subject]="editingSubject()" (saved)="onFormSaved()" (cancelled)="onFormCancel()" />
+}
+@if (deleteConfirm()) {
+  <div class="modal-backdrop" (click)="cancelDelete()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h3>Confirmer</h3>
+      <p>Supprimer {{ deleteConfirm()?.name }} ?</p>
+      <div class="modal-actions">
+        <button class="btn-cancel" (click)="cancelDelete()">Annuler</button>
+        <button class="btn-delete" (click)="deleteSubject()">Supprimer</button>
+      </div>
+    </div>
+  </div>
+}

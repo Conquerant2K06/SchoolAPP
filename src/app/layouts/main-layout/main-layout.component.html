@@ -1,0 +1,44 @@
+﻿<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="logo">🎓</span>
+      <span class="name">SchoolCI</span>
+    </div>
+
+    <nav>
+      <a routerLink="/dashboard" routerLinkActive="active">📊 Tableau de bord</a>
+
+      @if (user()?.role === 'admin') {
+        <a routerLink="/admin/students" routerLinkActive="active">👨‍🎓 Élèves</a>
+        <a routerLink="/admin/teachers" routerLinkActive="active">👨‍🏫 Enseignants</a>
+        <a routerLink="/admin/classes" routerLinkActive="active">🏫 Classes</a>
+        <a routerLink="/admin/subjects" routerLinkActive="active">📚 Matières</a>
+        <a routerLink="/admin/report-cards" routerLinkActive="active">📄 Bulletins</a>
+      }
+
+      @if (user()?.role === 'teacher') {
+        <a routerLink="/teacher/grades" routerLinkActive="active">✏️ Saisir les notes</a>
+      }
+
+      @if (user()?.role === 'student') {
+        <a routerLink="/student/grades" routerLinkActive="active">📝 Mes notes</a>
+        <a routerLink="/student/report-cards" routerLinkActive="active">📄 Mes bulletins</a>
+      }
+    </nav>
+
+    <div class="user-section">
+      <div class="user-info">
+        <div class="avatar">{{ initials() }}</div>
+        <div class="details">
+          <div class="email">{{ user()?.email }}</div>
+          <div class="role">{{ user()?.role }}</div>
+        </div>
+      </div>
+      <button class="logout-btn" (click)="logout()">Déconnexion</button>
+    </div>
+  </aside>
+
+  <main class="content">
+    <router-outlet />
+  </main>
+</div>
